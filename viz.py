@@ -13,6 +13,5 @@ def plot_dist(pdist, ax):
         p[i] = pdist.prob(Z[i])
     p = np.reshape(p, shape)
     p /= np.sum(p)
-    #Y = -Y # not sure why, but my plots are upside down compared to paper
     ax.contour(X, Y, p)
 
