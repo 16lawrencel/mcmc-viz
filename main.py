@@ -7,13 +7,13 @@ import sampler
 
 fig, ax = plt.subplots()
 xdata, ydata = [], []
-ln, = plt.plot([], [], 'ro', animated=True, markersize=3)
+ln, = plt.plot([], [], 'ro', animated=True, markersize=1)
 
-T = 100
+T = 10000
 pdist = prob.MultNormalDist()
-eps = 0.1
-qdist = prob.CondNormalDist(np.full(2, eps))
-mcmc = sampler.MHSampler(pdist, qdist)
+eps = 0.01
+#mcmc = sampler.RWSampler(pdist, eps)
+mcmc = sampler.GibbsSampler(pdist)
 x = np.random.randn(2)
 
 def init():
@@ -29,5 +29,5 @@ def update(frame):
     return ln,
 
 ani = FuncAnimation(fig, update, frames=np.arange(0, T),
-                    init_func=init, blit=True)
+                    init_func=init, blit=True, interval = 0.001)
 plt.show()

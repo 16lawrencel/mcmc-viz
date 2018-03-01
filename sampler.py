@@ -1,4 +1,5 @@
 import numpy as np
+import prob
 
 class MCMCSampler:
     def __init__(self, p):
@@ -19,4 +20,21 @@ class MHSampler(MCMCSampler):
             return xp
         else: # reject
             return x
+
+class RWSampler(MHSampler):
+    def __init__(self, p, eps):
+        dim = p.dim
+        q = prob.CondNormalDist(np.full(dim, eps))
+        super(RWSampler, self).__init__(p, q)
+
+class GibbsSampler(MCMCSampler):
+    def __init__(self, p):
+        super(GibbsSampler, self).__init__(p)
+
+    def sample(self, x):
+        dim = self.p.dim
+        i = np.random.randint(dim)
+        x_ = x.copy()
+        x_[i] = self.p.gibbs_sample(x, i)
+        return x_
 
