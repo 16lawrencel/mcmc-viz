@@ -5,8 +5,8 @@ import viz
 import prob
 import sampler
 
-SHOW_LINES = True
-MAX_PTS = 10
+SHOW_LINES = False
+MAX_PTS = 100000
 
 fig, ax = plt.subplots()
 xdata, ydata = [], []
@@ -47,3 +47,4 @@ def update(frame):
 ani = FuncAnimation(fig, update, frames=np.arange(0, T),
                     init_func=init, blit=True, interval = 200)
 plt.show()
+

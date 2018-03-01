@@ -30,11 +30,12 @@ class RWSampler(MHSampler):
 class GibbsSampler(MCMCSampler):
     def __init__(self, p):
         super(GibbsSampler, self).__init__(p)
+        self.i = 0
 
     def sample(self, x):
         dim = self.p.dim
-        i = np.random.randint(dim)
         x_ = x.copy()
-        x_[i] = self.p.gibbs_sample(x, i)
+        x_[self.i] = self.p.gibbs_sample(x, self.i)
+        self.i = (self.i + 1) % dim
         return x_
 
